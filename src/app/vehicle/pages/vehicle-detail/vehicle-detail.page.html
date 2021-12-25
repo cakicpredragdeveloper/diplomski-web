@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/magacini"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="loading === 0 ">Vehicle {{ vehicle.vin}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-grid class="ion-padding" >
+
+    <ion-row *ngIf="loading === 0">
+      <ion-col sizeXl="10" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
+        <h5><strong>Vin:</strong> {{vehicle.vin}} </h5>
+        <h5><strong>Manufacturer:</strong> {{vehicle.manufacturerName}} </h5>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="loading > 0">
+      <ion-col class="ion-text-center">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</ion-content>

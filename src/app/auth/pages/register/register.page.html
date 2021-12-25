@@ -1,0 +1,111 @@
+<ion-content>
+  <form [formGroup]="registerForm" *ngIf="registerFormActive" (ngSubmit)="register()" (keydown.enter)="register()" >
+
+    <ion-grid style="padding-top: 100px;" >
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col sizeXs="12" sizeMd="10" sizeXl="6">
+          <div class="form-group">
+            <ion-item>
+              <ion-input type="email"
+                         placeholder="Email"
+                         [autofocus]="true"
+                         formControlName="email"
+              ></ion-input>
+            </ion-item>
+            <ion-label
+              *ngIf="(registerForm.controls.email.touched || submitted) && registerForm.controls.email.errors?.required"
+              class="small-1"
+              color="danger"
+            >Potrebno je uneti email adresu
+            </ion-label>
+            <ion-label
+              *ngIf="(registerForm.controls.email.touched || submitted) && registerForm.controls.email.errors?.email"
+              class="small-1"
+              color="danger"
+            >Email adresa nije validna
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col sizeXs="12" sizeMd="10" sizeXl="6">
+          <div class="form-group">
+            <ion-item>
+              <ion-input #password type="password" placeholder="Lozinka" formControlName="password"></ion-input>
+              <ion-icon name="eye"
+                        slot="end"
+                        class="show-right-icon-input pointer"
+                        (click)="showPassword(password)"
+              ></ion-icon>
+            </ion-item>
+            <ion-label
+              *ngIf="(registerForm.controls.password.touched || submitted) && registerForm.controls.password.errors?.required"
+              class="small-1"
+              color="danger"
+            >Potrebno je uneti lozinku
+            </ion-label>
+            <ion-label
+              *ngIf="(registerForm.controls.password.touched || submitted) && registerForm.controls.password.errors?.minlength"
+              class="small-1"
+              color="danger"
+            >Lozinka mora imati minimum 6 karaktera
+            </ion-label>
+            <ion-label
+              *ngIf="(registerForm.controls.password.touched || submitted) && registerForm.errors?.passwordNotStrong"
+              class="small-1"
+              color="danger"
+            >Lozinka mora sadržati minimum 1 cifru, 1 veliko slovo i 1 specijalni karakter
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col sizeXs="12" sizeMd="10" sizeXl="6">
+          <div class="form-group">
+            <ion-item>
+              <ion-input #passwordRepeat type="password" placeholder="Potvrdi Lozinku" formControlName="confirmedPassword"
+              ></ion-input>
+              <ion-icon name="eye"
+                        slot="end"
+                        class="show-right-icon-input pointer"
+                        (click)="showPassword(passwordRepeat)"
+              ></ion-icon>
+            </ion-item>
+            <ion-label
+              *ngIf="(registerForm.controls.confirmedPassword.touched || submitted) && registerForm.controls.confirmedPassword.errors?.required"
+              class="small-1"
+              color="danger"
+            >Potrebno je uneti potvrdu lozinke
+            </ion-label>
+            <br>
+            <ion-label
+              *ngIf="registerForm.errors?.passwordsNotMatched"
+              class="small-1"
+              color="danger"
+            >Lozinke se ne poklapaju
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button routerLink="/login">Login</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col sizeXs="12" sizeMd="6" sizeXl="5" class="ion-text-center">
+          <ion-button color="primary" type="submit" class="login-button"
+                      [disabled]="registerForm.invalid">
+            Dodaj
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>
