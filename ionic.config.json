@@ -1,0 +1,7 @@
+{
+  "name": "Diplomski-WEB",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
