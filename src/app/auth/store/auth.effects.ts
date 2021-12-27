@@ -23,12 +23,12 @@ export class AuthEffects implements OnInitEffects {
           .pipe(
             map(response => {
               const accessToken = localStorage.getItem('accessToken');
-              this.router.navigate(['/']);
+              //this.router.navigate(['/']);
               return AuthActions.loginSuccess({user: response});
             }),
             catchError((err) => {
               console.log(err.error);
-              this.router.navigate(['/login']);
+              //this.router.navigate(['/login']);
               return of(AuthActions.loginFailure({error: err.error}));
             })
           );

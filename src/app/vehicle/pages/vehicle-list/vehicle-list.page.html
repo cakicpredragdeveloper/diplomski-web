@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Vozila</ion-title>
+    <ion-title>Vehicles</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,18 +16,88 @@
         *ngIf="paginationConfig.total !== undefined"
         sizeXl="3" sizeLg="4" sizeMd="5" sizeSm="6" sizeXs="12">
         <ion-item  lines="none">
-          <ion-chip color="primary">Ukupno vozila: {{ paginationConfig.total }}</ion-chip>
+          <ion-chip color="primary">Total number of vehicles: {{ paginationConfig.total }}</ion-chip>
         </ion-item>
       </ion-col>
 
     </ion-row>
+
+    <form [formGroup]="filter" *ngIf="filter">
+
+    <ion-row  class="ion-padding">
+      <ion-col sizeXl="12" sizeLg="12" sizeMd="12" sizeMd="12" sizeXs="12">
+        <ion-item>
+          <ion-input placeholder="Type vehicle Vin..." formControlName="name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-padding-start ion-padding-end" *ngIf="vehicleFilter" >
+
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-item >
+          <ion-label>Manufacturer</ion-label>
+          <ion-select interface="popover" formControlName="manufacturer">
+            <ion-select-option *ngFor="let manufacturer of vehicleFilter.manufacturers" value="manufacturer">{{manufacturer}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col  sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-item disabled=" filter.controls.manufacturer.value.length === 0 " >
+          <ion-label>Model</ion-label>
+          <ion-select interface="popover" formControlName="model">
+            <ng-container  *ngIf="vehicleFilter && vehicleFilter.models.length>0">
+              <ion-select-option *ngFor="let model of vehicleFilter.models" value="model">{{model}}</ion-select-option>
+            </ng-container>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-item>
+          <ion-label>Fuel type</ion-label >
+          <ion-select  interface="popover" formControlName="fuelType">
+            <ion-select-option *ngFor="let fuelType of vehicleFilter.fuelTypes" value="fuelType">{{fuelType}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-item>
+          <ion-label>Drivetrain</ion-label>
+          <ion-select interface="popover" formControlName="drivetrain">
+            <ion-select-option *ngFor="let drivetrain of vehicleFilter.drivetrains" value="drivetrains">{{drivetrain}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+
+    </ion-row>
+
+    <ion-row class="ion-padding-start ion-padding-end">
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-input formControlName="yearFrom" placeholder="Year from..."></ion-input>
+      </ion-col>
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-input formControlName="yearTo" placeholder="to..."></ion-input>
+      </ion-col>
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-input formControlName="mileageFrom" placeholder="Mileage from..."></ion-input>
+      </ion-col>
+      <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-input formControlName="mileageTo" placeholder="to..."></ion-input>
+      </ion-col>
+    </ion-row>
+
+  </form>
 
     <ion-list>
       <ion-item detail *ngFor="let vehicle of vehicles; index as i" routerLink="/vehicles/{{ vehicle.vin }}">
         <ion-chip color="primary">{{ paginationConfig.pageSize * paginationConfig.pageIndex + i + 1}}</ion-chip>
         <ion-label>
           <h2> <strong>Vin: </strong> {{ vehicle.vin }}</h2>
-          <h2> <strong>Manufacturer: </strong> {{ vehicle.manufacturerName }}</h2>
+          <h2> <strong>Manufacturer: </strong> {{ vehicle.manufacturerName + ' ' + vehicle.modelName }}</h2>
         </ion-label>
       </ion-item>
     </ion-list>

@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/admin/magacini"></ion-back-button>
+      <ion-back-button defaultHref="/vehicles"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="loading === 0 ">Vehicle {{ vehicle.vin}}</ion-title>
+    <ion-title *ngIf="loading === 0 ">Vehicle Vin:{{ vehicle.vin}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,12 +12,24 @@
 
   <ion-grid class="ion-padding" >
 
-    <ion-row *ngIf="loading === 0">
-      <ion-col sizeXl="10" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
-        <h5><strong>Vin:</strong> {{vehicle.vin}} </h5>
+    <ion-row *ngIf="loading === 0" class="ion-padding-start" >
+      <ion-col sizeXl="4" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
         <h5><strong>Manufacturer:</strong> {{vehicle.manufacturerName}} </h5>
+        <h5><strong>ModelName:</strong> {{vehicle.modelName}} </h5>
+        <h5><strong>Transmission:</strong> {{vehicle.transmission}} </h5>
+        <h5><strong>Color:</strong> {{vehicle.color}} </h5>
+        <h5><strong>Year Produced:</strong> {{vehicle.yearProduced}} </h5>
+        <h5><strong>Odomoter:</strong> {{vehicle.odometerValue}} </h5>
+        <h5><strong>Fuel type:</strong> {{vehicle.engineFuel}} </h5>
+        <h5><strong>Engine has Gas:</strong> {{vehicle.engineHasGas ? 'Yes' : 'No'}} </h5>
+        <h5><strong>Engine capacity:</strong> {{vehicle.engineCapacity}}cc</h5>
+        <h5><strong>Body Type:</strong> {{vehicle.bodyType}} </h5>
+        <h5><strong>Drivetrain:</strong> {{vehicle.drivetrain}} </h5>
+        <h5><strong>Price in euro:</strong> {{vehicle.priceEur}} €</h5>
       </ion-col>
     </ion-row>
+
+
 
     <ion-row *ngIf="loading > 0">
       <ion-col class="ion-text-center">

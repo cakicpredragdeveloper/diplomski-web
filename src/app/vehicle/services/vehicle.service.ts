@@ -10,7 +10,8 @@ import {Observable} from 'rxjs';
 })
 export class VehicleService extends BaseApiService {
 
-  public index(filter: string, pageIndex: number, pageSize: number, orderBy: string = 'ID', direction: string = 'DESC'): Observable<PaginationResponse<Vehicle>> {
+  public index(filter: string, pageIndex: number, pageSize: number,
+    orderBy: string = 'ID', direction: string = 'DESC'): Observable<PaginationResponse<Vehicle>> {
 
     const params = this.getQueryParams(filter, pageIndex, pageSize, orderBy, direction);
 
@@ -37,5 +38,15 @@ export class VehicleService extends BaseApiService {
 
     return this.http.delete(this.apiUrl + `/api/vehicles/${vehicleVin}`)
       .pipe(catchError(response => this.handleError(response)));
+  }
+
+  public filters(): Observable<any> {
+    return this.http.get(this.apiUrl+ '/api/vehicles/filters')
+      .pipe(catchError(response => this.handleError(response)));
+  }
+
+  public models(vahicleManufacturer: string): Observable<any> {
+    return this.http.get(this.apiUrl + `/api/vehicles/${vahicleManufacturer}/models`)
+    .pipe(catchError(response => this.handleError(response)));
   }
 }

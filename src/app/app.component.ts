@@ -13,8 +13,8 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Login', url: '/login', icon: 'mail' },
     { title: 'Register', url: '/register', icon: 'paper-plane' },
-    { title: 'Vehicles', url: '/vehicles', icon: 'paper-plane' },
-    { title: 'Home', url: '/', icon: 'heart' }
+    { title: 'Vehicles', url: '/vehicles', icon: 'car-sport' },
+    { title: 'Home', url: '/', icon: 'home' }
   ];
 
   constructor(private router: Router) {}

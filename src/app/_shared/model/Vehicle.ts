@@ -5,7 +5,7 @@ export interface Vehicle {
   transmission: string;
   color: string;
   odometerValue: number;
-  yearProduced: number
+  yearProduced: number;
   engineFuel: string;
   engineHasGas: boolean;
   engineCapacity: number;

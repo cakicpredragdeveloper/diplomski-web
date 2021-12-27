@@ -20,6 +20,10 @@ export class VehicleDetailPage implements OnInit {
               private vehicleService: VehicleService) {
   }
 
+  /**
+   * Lifecycle methods--------------------------------------------------------------------------------------------------------------------
+   */
+
   ngOnInit() {
     this.initializeComponent();
   }
@@ -37,16 +41,38 @@ export class VehicleDetailPage implements OnInit {
     });
   }
 
+  /**
+   * API Calls------------------------------------------------------------------------------------------------------------------------------
+   */
+
   fetchVehicle(vehicleVin) {
     this.loading++;
-    this.vehicleService.show(vehicleVin).subscribe(
-      result => {
-        this.vehicle = result;
-      },
-      error => {
-        // TODO (handle-me)
-      },
-      () => this.loading--
-    );
+
+    //TODO: Delete this and uncomment code bellow when api is implemented
+
+    this.vehicle = {vin: '123',
+    manufacturerName: 'Volkswagen',
+    modelName: 'Golf 4',
+    transmission: 'Manual',
+    color: 'black',
+    odometerValue: 3,
+    yearProduced: 2001,
+    engineFuel: 'Diesel',
+    engineHasGas: true,
+    engineCapacity: 1900,
+    bodyType: 'Hatchback',
+    drivetrain: '4x4',
+    priceEur: 2000} as Vehicle;
+    this.loading--;
+
+    // this.vehicleService.show(vehicleVin).subscribe(
+    //   result => {
+    //     this.vehicle = result;
+    //   },
+    //   error => {
+    //     // TODO (handle-me)
+    //   },
+    //   () => this.loading--
+    // );
   }
 }
