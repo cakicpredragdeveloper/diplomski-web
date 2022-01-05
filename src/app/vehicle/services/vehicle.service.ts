@@ -45,8 +45,8 @@ export class VehicleService extends BaseApiService {
       .pipe(catchError(response => this.handleError(response)));
   }
 
-  public models(vahicleManufacturer: string): Observable<any> {
-    return this.http.get(this.apiUrl + `/api/vehicles/${vahicleManufacturer}/models`)
+  public manufaturesWithModels(vahicleManufacturer: string): Observable<any> {
+    return this.http.get(this.apiUrl + `/api/vehicles/get-manufacturers-and-models`)
     .pipe(catchError(response => this.handleError(response)));
   }
 }

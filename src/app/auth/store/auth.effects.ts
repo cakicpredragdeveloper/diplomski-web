@@ -27,7 +27,7 @@ export class AuthEffects implements OnInitEffects {
               return AuthActions.loginSuccess({user: response});
             }),
             catchError((err) => {
-              console.log(err.error);
+             // console.log(err.error);
               //this.router.navigate(['/login']);
               return of(AuthActions.loginFailure({error: err.error}));
             })

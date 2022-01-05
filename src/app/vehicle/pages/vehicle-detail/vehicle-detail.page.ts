@@ -35,7 +35,7 @@ export class VehicleDetailPage implements OnInit {
         const vehicleVin = params.get('vehicleVin');
         this.fetchVehicle(vehicleVin);
       } else {
-        // add toast nije moguce pronaci magacin
+        //TODO: add toast
         this.router.navigate(['/vehicles']);
       }
     });
@@ -48,31 +48,14 @@ export class VehicleDetailPage implements OnInit {
   fetchVehicle(vehicleVin) {
     this.loading++;
 
-    //TODO: Delete this and uncomment code bellow when api is implemented
-
-    this.vehicle = {vin: '123',
-    manufacturerName: 'Volkswagen',
-    modelName: 'Golf 4',
-    transmission: 'Manual',
-    color: 'black',
-    odometerValue: 3,
-    yearProduced: 2001,
-    engineFuel: 'Diesel',
-    engineHasGas: true,
-    engineCapacity: 1900,
-    bodyType: 'Hatchback',
-    drivetrain: '4x4',
-    priceEur: 2000} as Vehicle;
-    this.loading--;
-
-    // this.vehicleService.show(vehicleVin).subscribe(
-    //   result => {
-    //     this.vehicle = result;
-    //   },
-    //   error => {
-    //     // TODO (handle-me)
-    //   },
-    //   () => this.loading--
-    // );
+    this.vehicleService.show(vehicleVin).subscribe(
+      result => {
+        this.vehicle = result;
+      },
+      error => {
+        // TODO (handle-me)
+      },
+      () => this.loading--
+    );
   }
 }

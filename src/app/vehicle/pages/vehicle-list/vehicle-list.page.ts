@@ -1,3 +1,4 @@
+import { ManufacturerWithModels } from './../../../_shared/model/ManufacturerWithModels';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -15,12 +16,12 @@ import { Vehicle } from '../../../_shared/model/Vehicle';
 })
 export class VehicleListPage {
 
+  vehicles: Vehicle[] = undefined;
+
+  manufacturers: ManufacturerWithModels[] = undefined;
+  manufaturerModels: string[] = undefined;
 
   loading = true;
-
-
-  vehicles: Vehicle[] = undefined;
-  vehicleFilter: VehicleFilter = undefined;
 
   paginationConfig = {
     pageIndex: 0,
@@ -32,74 +33,6 @@ export class VehicleListPage {
 
 
   /**
-   * TODO: Remove this when api is implemented--------------------------------------------------------------------------------------------
-   */
-
-  hardCodedVehicles: Vehicle[] = [
-    {
-      vin: '123',
-      manufacturerName: 'Volkswagen',
-      modelName: 'Golf 4',
-      transmission: 'Manual',
-      color: 'black',
-      odometerValue: 3,
-      yearProduced: 2001,
-      engineFuel: 'Diesel',
-      engineHasGas: true,
-      engineCapacity: 1900,
-      bodyType: 'Hatchbak',
-      drivetrain: '?',
-      priceEur: 2000
-    },
-    {
-      vin: '333',
-      manufacturerName: 'Volkswagen',
-      modelName: 'Golf 5',
-      transmission: 'Manual',
-      color: 'blue',
-      odometerValue: 3,
-      yearProduced: 2004,
-      engineFuel: 'Diesel',
-      engineHasGas: true,
-      engineCapacity: 2000,
-      bodyType: 'Hatchbak',
-      drivetrain: '?',
-      priceEur: 2900
-    },
-    {
-      vin: '333',
-      manufacturerName: 'Mercedes-benz',
-      modelName: 'C220',
-      transmission: 'Automatic',
-      color: 'blue',
-      odometerValue: 3,
-      yearProduced: 2001,
-      engineFuel: 'Diesel',
-      engineHasGas: true,
-      engineCapacity: 2143,
-      bodyType: 'Limusine',
-      drivetrain: '?',
-      priceEur: 5000
-    },
-    {
-      vin: '444',
-      manufacturerName: 'Volkswagen',
-      modelName: 'Passat B5.5',
-      transmission: 'Manual',
-      color: 'black',
-      odometerValue: 3,
-      yearProduced: 2001,
-      engineFuel: 'Diesel',
-      engineHasGas: true,
-      engineCapacity: 1900,
-      bodyType: 'Limusine',
-      drivetrain: '?',
-      priceEur: 500
-    }
-  ];
-
-
-  /**
    *  Lifecycle methods --------------------------------------------------------------------------------------------------------------------
    */
 
@@ -108,17 +41,22 @@ export class VehicleListPage {
 
   ionViewWillEnter() {
     this.buildFilter();
-    this.fetchVehicles();
   }
 
   ionViewDidLeave() {
+
     this.loading = false;
     this.vehicles = undefined;
+    this.manufacturers = undefined;
+    this.manufaturerModels = undefined;
+
     this.paginationConfig = {
       pageIndex: 0,
       pageSize: 10,
       total: undefined
     };
+
+    this.filter = undefined;
   }
 
   /**
@@ -127,47 +65,27 @@ export class VehicleListPage {
 
   fetchVehicles() {
 
-     //TODO: Remove this when api is implemented and uncomment code bellow
-     this.vehicles = this.hardCodedVehicles;
-     this.paginationConfig.total = 4;
-     this.loading=false;
-     this.fetchFilters();
+    this.vehicleService.index(this.filter.value,
+      this.paginationConfig.pageIndex, this.paginationConfig.pageSize,
+      'CreatedAt', 'DESC').subscribe(
+      result => {
+        this.vehicles = result.items;
+        this.paginationConfig.total = result.total;
 
-    // this.vehicleService.index('',
-    //   this.paginationConfig.pageIndex, this.paginationConfig.pageSize,
-    //   'CreatedAt', 'DESC').subscribe(
-    //   result => {
-    //     this.vehicles = result.items;
-    //     this.paginationConfig.total = result.total;
-    //     this.fetchFilters();
-
-
-
-    //   },
-    //   error => {
-    //     // TODO (handle-me)
-    //   },
-    //   () => this.loading = false
-    // );
-  }
-
-  fetchFilters() {
-
-    this.vehicleService.filters().subscribe(
-      result =>{
-        this.vehicleFilter = result;
+        this.fetchManufacturersWithModels();
       },
-      error =>{
-        //TODO (handle-me)
-      }
+      error => {
+        // TODO (handle-me)
+      },
+      () => this.loading = false
     );
-
   }
 
-  fetchModels() {
-    this.vehicleService.models(this.filter.controls.manufacturer.value).subscribe(
+
+  fetchManufacturersWithModels() {
+    this.vehicleService.manufaturesWithModels(this.filter.controls.manufacturer.value).subscribe(
       result =>{
-        this.vehicleFilter.models = result;
+          this.manufacturers = result;
       },
       error =>{
         //TODO (handle-me)
@@ -199,10 +117,28 @@ export class VehicleListPage {
         distinctUntilChanged())
       .subscribe(value => {
         this.paginationConfig.pageIndex = 0;
-        this.fetchModels();
         this.fetchVehicles();
       });
+
+      this.fetchVehicles();
   }
+
+  /**
+   * Logic---------------------------------------------------------------------------------------------------------------------------------
+   */
+
+   onSelectManufacturer( chosenManufacturer ): void {
+
+    const index = this.manufacturers.findIndex( manufacturer => manufacturer.manufacturer === chosenManufacturer.target.value);
+
+    if(index === -1)
+    {
+      this.manufaturerModels = [];
+      return;
+    }
+
+    this.manufaturerModels = this.manufacturers[index].models;
+   }
 
   /**
    * Pagination----------------------------------------------------------------------------------------------------------------------------
@@ -212,7 +148,5 @@ export class VehicleListPage {
     this.paginationConfig.pageIndex = (next ? this.paginationConfig.pageIndex + 1 : this.paginationConfig.pageIndex - 1);
     this.fetchVehicles();
   }
-
-
 
 }

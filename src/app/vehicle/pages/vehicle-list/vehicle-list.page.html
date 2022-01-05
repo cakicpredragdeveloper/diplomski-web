@@ -32,24 +32,22 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-padding-start ion-padding-end" *ngIf="vehicleFilter" >
+    <ion-row class="ion-padding-start ion-padding-end" *ngIf="manufacturers" >
 
       <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
         <ion-item >
           <ion-label>Manufacturer</ion-label>
-          <ion-select interface="popover" formControlName="manufacturer">
-            <ion-select-option *ngFor="let manufacturer of vehicleFilter.manufacturers" value="manufacturer">{{manufacturer}}</ion-select-option>
+          <ion-select interface="popover" formControlName="manufacturer"  (ionChange)="onSelectManufacturer($event)">>
+            <ion-select-option *ngFor="let manufacturer of manufacturers" value="manufacturer">{{ manufacturer.manufacturer }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
 
       <ion-col  sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
-        <ion-item disabled=" filter.controls.manufacturer.value.length === 0 " >
+        <ion-item disabled=" manufaturerModels === 0 " >
           <ion-label>Model</ion-label>
           <ion-select interface="popover" formControlName="model">
-            <ng-container  *ngIf="vehicleFilter && vehicleFilter.models.length>0">
-              <ion-select-option *ngFor="let model of vehicleFilter.models" value="model">{{model}}</ion-select-option>
-            </ng-container>
+              <ion-select-option *ngFor="let model of manufaturerModels" value="model">{{ model }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -58,7 +56,11 @@
         <ion-item>
           <ion-label>Fuel type</ion-label >
           <ion-select  interface="popover" formControlName="fuelType">
-            <ion-select-option *ngFor="let fuelType of vehicleFilter.fuelTypes" value="fuelType">{{fuelType}}</ion-select-option>
+            <ion-select-option  value="diesel"> Diesel </ion-select-option>
+            <ion-select-option  value="petrol"> Petrol </ion-select-option>
+            <ion-select-option  value="cng">    CNG </ion-select-option>
+            <ion-select-option  value="lpg">    LPG </ion-select-option>
+            <ion-select-option  value="ev">     Electric Vehicle </ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -67,7 +69,10 @@
         <ion-item>
           <ion-label>Drivetrain</ion-label>
           <ion-select interface="popover" formControlName="drivetrain">
-            <ion-select-option *ngFor="let drivetrain of vehicleFilter.drivetrains" value="drivetrains">{{drivetrain}}</ion-select-option>
+            <ion-select-option  value="fwd"> FWD </ion-select-option>
+            <ion-select-option  value="rwd"> RWD </ion-select-option>
+            <ion-select-option  value="4wd"> 4WD </ion-select-option>
+            <ion-select-option  value="awd"> AWD </ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>

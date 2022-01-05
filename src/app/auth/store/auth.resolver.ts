@@ -19,7 +19,7 @@ export class AuthResolver implements Resolve<boolean> {
     this.authService.isLoggedIn()
       .subscribe(response => this.store.dispatch(loginSuccess({user: response})),
                  err => {
-                   console.log(err);
+                   //console.log(err);
                    error = err;
                  });
     return !!error;
