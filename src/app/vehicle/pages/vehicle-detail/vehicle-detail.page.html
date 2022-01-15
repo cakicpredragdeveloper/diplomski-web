@@ -13,13 +13,15 @@
   <ion-grid class="ion-padding" >
 
     <ion-row *ngIf="loading === 0" class="ion-padding-start" >
-      <ion-col sizeXl="4" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
+      <ion-col sizeXl="6" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
         <h5><strong>Manufacturer:</strong> {{vehicle.manufacturerName}} </h5>
         <h5><strong>ModelName:</strong> {{vehicle.modelName}} </h5>
         <h5><strong>Transmission:</strong> {{vehicle.transmission}} </h5>
         <h5><strong>Color:</strong> {{vehicle.color}} </h5>
         <h5><strong>Year Produced:</strong> {{vehicle.yearProduced}} </h5>
         <h5><strong>Odomoter:</strong> {{vehicle.odometerValue}} </h5>
+      </ion-col>
+      <ion-col sizeXl="6" sizeLg="6" sizeMd="12" sizeSm="12" sizeXs="12">
         <h5><strong>Fuel type:</strong> {{vehicle.engineFuel}} </h5>
         <h5><strong>Engine has Gas:</strong> {{vehicle.engineHasGas ? 'Yes' : 'No'}} </h5>
         <h5><strong>Engine capacity:</strong> {{vehicle.engineCapacity}}cc</h5>
@@ -29,14 +31,12 @@
       </ion-col>
     </ion-row>
 
-
-
     <ion-row *ngIf="loading > 0">
       <ion-col class="ion-text-center">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
     </ion-row>
 
-
   </ion-grid>
 </ion-content>
+

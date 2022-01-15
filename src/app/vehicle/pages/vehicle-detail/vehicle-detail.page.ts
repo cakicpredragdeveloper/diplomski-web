@@ -48,7 +48,7 @@ export class VehicleDetailPage implements OnInit {
   fetchVehicle(vehicleVin) {
     this.loading++;
 
-    this.vehicleService.show(vehicleVin).subscribe(
+    this.vehicleService.getByVin(vehicleVin).subscribe(
       result => {
         this.vehicle = result;
       },

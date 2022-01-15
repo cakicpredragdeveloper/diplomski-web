@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/vehicle-list/vehicle-list.module').then( m => m.VehicleListPageModule)
   },
   {
+    path: 'vehicle-track-visualisation',
+    loadChildren: () => import('./pages/vehicle-track-visualisation/vehicle-track-visualisation.module').then( m => m.VehicleTrackVisualisationPageModule)
+  },
+  {
     path: ':vehicleVin',
     loadChildren: () => import('./pages/vehicle-detail/vehicle-detail.module').then( m => m.VehicleDetailPageModule)
   }

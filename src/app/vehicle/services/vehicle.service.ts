@@ -24,6 +24,11 @@ export class VehicleService extends BaseApiService {
       .pipe(catchError(response => this.handleError(response)));
   }
 
+  public getByVin(vehicleVin: string): Observable<Vehicle> {
+    return this.http.get<Vehicle>(this.apiUrl + `/api/vehicles/get-by-vin?vin=${vehicleVin}`)
+      .pipe(catchError(response => this.handleError(response)));
+  }
+
   public store(vehicle: Vehicle): Observable<Vehicle> {
     return this.http.post<Vehicle>(this.apiUrl + '/api/vehicles', vehicle)
       .pipe(catchError(response => this.handleError(response)));
