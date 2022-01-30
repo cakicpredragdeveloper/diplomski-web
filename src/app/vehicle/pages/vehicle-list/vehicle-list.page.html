@@ -23,31 +23,40 @@
     </ion-row>
 
     <form [formGroup]="filter" *ngIf="filter">
-
+<!-- 
     <ion-row  class="ion-padding">
       <ion-col sizeXl="12" sizeLg="12" sizeMd="12" sizeMd="12" sizeXs="12">
         <ion-item>
           <ion-input placeholder="Type vehicle Vin..." formControlName="name"></ion-input>
         </ion-item>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <ion-row class="ion-padding-start ion-padding-end" *ngIf="manufacturers" >
 
       <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
         <ion-item >
           <ion-label>Manufacturer</ion-label>
-          <ion-select interface="popover" formControlName="manufacturer"  (ionChange)="onSelectManufacturer($event)">>
-            <ion-select-option *ngFor="let manufacturer of manufacturers" value="manufacturer">{{ manufacturer.manufacturer }}</ion-select-option>
+          <ion-select interface="popover" formControlName="manufacturerName"  (ionChange)="onSelectManufacturer($event)">>
+            <ion-select-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.manufacturer">{{ manufacturer.manufacturer }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
 
-      <ion-col  sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
-        <ion-item disabled=" manufaturerModels === 0 " >
+      <ion-col *ngIf="!isManufacturerSelected" sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12" >
+        <ion-item disabled="true">
           <ion-label>Model</ion-label>
-          <ion-select interface="popover" formControlName="model">
-              <ion-select-option *ngFor="let model of manufaturerModels" value="model">{{ model }}</ion-select-option>
+          <ion-select interface="popover" formControlName="modelName">
+             
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col *ngIf="isManufacturerSelected" sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+        <ion-item>
+          <ion-label>Model</ion-label>
+          <ion-select interface="popover" formControlName="modelName">
+              <ion-select-option *ngFor="let model of manufaturerModels" [value]="model">{{ model }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -55,9 +64,9 @@
       <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
         <ion-item>
           <ion-label>Fuel type</ion-label >
-          <ion-select  interface="popover" formControlName="fuelType">
+          <ion-select  interface="popover" formControlName="engineFuel">
             <ion-select-option  value="diesel"> Diesel </ion-select-option>
-            <ion-select-option  value="petrol"> Petrol </ion-select-option>
+            <ion-select-option  value="gasoline"> Gasoline </ion-select-option>
             <ion-select-option  value="cng">    CNG </ion-select-option>
             <ion-select-option  value="lpg">    LPG </ion-select-option>
             <ion-select-option  value="ev">     Electric Vehicle </ion-select-option>
@@ -69,10 +78,10 @@
         <ion-item>
           <ion-label>Drivetrain</ion-label>
           <ion-select interface="popover" formControlName="drivetrain">
-            <ion-select-option  value="fwd"> FWD </ion-select-option>
-            <ion-select-option  value="rwd"> RWD </ion-select-option>
-            <ion-select-option  value="4wd"> 4WD </ion-select-option>
-            <ion-select-option  value="awd"> AWD </ion-select-option>
+            <ion-select-option  value="front"> Front Wheel Drive </ion-select-option>
+            <ion-select-option  value="rear">  Rear Wheel Drive </ion-select-option>
+            <ion-select-option  value="all">   All Wheel Drive </ion-select-option>
+
           </ion-select>
         </ion-item>
       </ion-col>
@@ -88,10 +97,10 @@
         <ion-input formControlName="yearTo" placeholder="to..."></ion-input>
       </ion-col>
       <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
-        <ion-input formControlName="mileageFrom" placeholder="Mileage from..."></ion-input>
+        <ion-input formControlName="odometerFrom" placeholder="Mileage from..."></ion-input>
       </ion-col>
       <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
-        <ion-input formControlName="mileageTo" placeholder="to..."></ion-input>
+        <ion-input formControlName="odometerTo" placeholder="to..."></ion-input>
       </ion-col>
     </ion-row>
 

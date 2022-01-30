@@ -14,10 +14,10 @@ export class AppComponent implements OnInit {
     { title: 'Login', url: '/login', icon: 'mail' },
     { title: 'Register', url: '/register', icon: 'paper-plane' },
     { title: 'Vehicles', url: '/vehicles', icon: 'car-sport' },
-    { title: 'Visualization', url: '/vehicles/vehicle-track-visualisation', icon: 'paper-plane' },
-    { title: 'Home', url: '/', icon: 'home' }
-  ];
+    { title: 'Visualization', url: '/vehicles/vehicle-track-visualisation', icon: 'map' },
 
+  ];
+    // { title: 'Home', url: '/', icon: 'home' }
   constructor(private router: Router) {}
 
   ngOnInit() {

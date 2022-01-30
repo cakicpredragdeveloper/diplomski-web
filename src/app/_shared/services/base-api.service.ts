@@ -37,12 +37,12 @@ export class BaseApiService {
 
     let params = new HttpParams();
 
-    params = (filter    ?   params.set('keyword',   filter)                     : params);
+    params = (filter    ?   params.set('keyword',   filter)     : params);
     params = (pageIndex ?   params.set('pageIndex', JSON.stringify(pageIndex))  : params);
     params = (pageSize  ?   params.set('pageSize',  JSON.stringify(pageSize))   : params);
     params = (orderBy   ?   params.set('orderBy',   orderBy)                    : params);
     params = (direction ?   params.set('direction', direction)                  : params);
-
+                          
     return params;
   }
 

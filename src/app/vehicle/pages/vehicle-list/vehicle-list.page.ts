@@ -8,6 +8,7 @@ import { VehicleService } from '../../services/vehicle.service';
 
 import { VehicleFilter } from './../../../_shared/model/VehicleFilter';
 import { Vehicle } from '../../../_shared/model/Vehicle';
+import { VehiclePaginationParameters } from 'src/app/_shared/model/VehiclePaginationParameters';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -22,6 +23,7 @@ export class VehicleListPage {
   manufaturerModels: string[] = undefined;
 
   loading = true;
+  isManufacturerSelected:boolean = false;
 
   paginationConfig = {
     pageIndex: 0,
@@ -65,9 +67,9 @@ export class VehicleListPage {
 
   fetchVehicles() {
 
-    this.vehicleService.index(this.filter.value,
+    this.vehicleService.index(this.filter.value as VehiclePaginationParameters,
       this.paginationConfig.pageIndex, this.paginationConfig.pageSize,
-      'CreatedAt', 'DESC').subscribe(
+      ).subscribe(
       result => {
         this.vehicles = result.items;
         this.paginationConfig.total = result.total;
@@ -83,7 +85,7 @@ export class VehicleListPage {
 
 
   fetchManufacturersWithModels() {
-    this.vehicleService.manufaturesWithModels(this.filter.controls.manufacturer.value).subscribe(
+    this.vehicleService.manufaturesWithModels(this.filter.controls.manufacturerName.value).subscribe(
       result =>{
           this.manufacturers = result;
       },
@@ -100,15 +102,14 @@ export class VehicleListPage {
   buildFilter() {
 
     this.filter = this.formBuilder.group({
-      name: [''],
-      manufacturer: [''],
-      model:[''],
-      fuelType:[''],
+      manufacturerName: [''],
+      modelName:[''],
+      engineFuel:[''],
       drivetrain:[''],
       yearFrom:[''],
       yearTo:[''],
-      mileageFrom:[''],
-      mileageTo:['']
+      odometerFrom:[''],
+      odometerTo:['']
     });
 
     this.filter.valueChanges
@@ -137,7 +138,14 @@ export class VehicleListPage {
       return;
     }
 
+    this.isManufacturerSelected = true;
+
     this.manufaturerModels = this.manufacturers[index].models;
+    this.filter.controls.manufacturerName.setValue(this.manufacturers[index].manufacturer);
+    this.filter.controls.manufacturerName.updateValueAndValidity();
+
+    this.filter.controls.modelName.setValue('');
+    this.filter.controls.modelName.updateValueAndValidity();
    }
 
   /**
