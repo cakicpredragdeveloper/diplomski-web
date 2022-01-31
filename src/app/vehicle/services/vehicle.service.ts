@@ -6,6 +6,8 @@ import {PaginationResponse} from '../../_shared/model/PaginationResponse';
 import {Observable} from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { VehiclePaginationParameters } from 'src/app/_shared/model/VehiclePaginationParameters';
+import { VehicleTrackSearchParameters } from './../../_shared/model/VehicleTrackSearchParameters';
+import { MarksModelTrackSearchParameters } from 'src/app/_shared/model/MarksModelTrackSearchParameters';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +29,6 @@ export class VehicleService extends BaseApiService {
     params = (vehicle.odometerTo.length>0 ?   params.set('odometerTo', vehicle.odometerTo)  : params);
     params = (pageIndex ?   params.set('pageIndex', JSON.stringify(pageIndex))  : params);
     params = (pageSize ?   params.set('pageSize', JSON.stringify(pageSize))  : params);
-                        
 
     return this.http.get<PaginationResponse<Vehicle>>(this.apiUrl + '/api/vehicles', { params })
       .pipe(catchError(response => this.handleError(response)));
@@ -66,6 +67,39 @@ export class VehicleService extends BaseApiService {
 
   public manufaturesWithModels(vahicleManufacturer: string): Observable<any> {
     return this.http.get(this.apiUrl + `/api/vehicles/get-manufacturers-and-models`)
+    .pipe(catchError(response => this.handleError(response)));
+  }
+
+  public getKilometrageByDate(vehicleTrackSearchParameters: VehicleTrackSearchParameters): Observable<any> {
+
+    let params = new HttpParams();
+
+    params = (vehicleTrackSearchParameters.vin          ?   params.set('vin', vehicleTrackSearchParameters.vin)  : params);
+    params = (vehicleTrackSearchParameters.startDate    ?   params.set('startDate', vehicleTrackSearchParameters.startDate.toString())
+     : params);
+    params = (vehicleTrackSearchParameters.endDate      ?   params.set('endDate', vehicleTrackSearchParameters.endDate.toString())
+     : params);
+    params = (vehicleTrackSearchParameters.dateInterval ?   params.set('dateInterval',vehicleTrackSearchParameters.dateInterval)  : params);
+
+    return this.http.get(this.apiUrl + `/get-kilometrage-by-date-interval`, {params})
+    .pipe(catchError(response => this.handleError(response)));
+  }
+
+  //
+
+  public getKilometrageByDateAndManufacturer(vehicleTrackSearchParameters: MarksModelTrackSearchParameters): Observable<any> {
+
+    let params = new HttpParams();
+    params = (vehicleTrackSearchParameters.startDate    ?   params.set('startDate', vehicleTrackSearchParameters.startDate.toString())
+     : params);
+    params = (vehicleTrackSearchParameters.endDate      ?   params.set('endDate', vehicleTrackSearchParameters.endDate.toString())
+     : params);
+    params = (vehicleTrackSearchParameters.dateInterval ?   params.set('dateInterval',vehicleTrackSearchParameters.dateInterval)  : params);
+    params = (vehicleTrackSearchParameters.manufacturerName ?   params.set('manufacturerName',vehicleTrackSearchParameters.manufacturerName)
+      : params);
+    params = (vehicleTrackSearchParameters.modelName ?   params.set('modelName',vehicleTrackSearchParameters.modelName)  : params);
+
+    return this.http.get(this.apiUrl + `/get-kilometrage-by-manufacturer-and-date-interval`, {params})
     .pipe(catchError(response => this.handleError(response)));
   }
 }
