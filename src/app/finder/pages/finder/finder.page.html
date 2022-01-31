@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Finder</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div style="background: white; width: 100%; height: 100%">
+
+  <form [formGroup]="filter" *ngIf="filterActive">
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-radio-group formControlName="type" value="circle">
+          <ion-list-header>
+            <ion-label>Type</ion-label>
+          </ion-list-header>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label>Circle</ion-label>
+                <ion-radio slot="start" value="circle"></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+            <ion-range formControlName="radius" min="1" max="1000" step="1" value="50" snaps color="primary" (ionChange)="getRadius($event)" [disabled]="filter.controls.type.value !== 'circle'">
+              <ion-chip slot="start" color="primary">1</ion-chip>
+              <ion-chip slot="end" color="primary">1000</ion-chip>
+              <ion-chip slot="end" color="primary">{{ radius }}</ion-chip>
+            </ion-range>
+            </ion-col>
+          </ion-row>
+
+          <ion-item>
+            <ion-label>Polygon</ion-label>
+            <ion-radio slot="start" value="polygon"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+  <app-map
+    *ngIf="filterActive"
+    [filter]="filter"
+    [coordinates$]="coordinates$"
+    (findWithinRadius)="findWithinRadius($event)"
+    (findWithinPolygon)="findWithinPolygon($event)"
+  ></app-map>
+</div>

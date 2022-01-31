@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './_shared/store';
 import { SharedModule } from './_shared/shared.module';
+import { MapModule } from './map/map.module';
 
 @NgModule({
   declarations: [AppComponent],
