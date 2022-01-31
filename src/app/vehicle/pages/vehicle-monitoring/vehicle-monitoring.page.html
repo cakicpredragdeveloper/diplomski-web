@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Monitoring</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+<form [formGroup]="vehicleForm" *ngIf="vehicleForm" >
+
+  <ion-row *ngIf="vahicleFormActive " class="ion-padding">
+    <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+      <ion-item >
+        <ion-label>Manufacturer</ion-label>
+        <ion-select interface="popover" formControlName="manufacturerName"  (ionChange)="onSelectManufacturer($event)">>
+          <ion-select-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.manufacturer">{{ manufacturer.manufacturer }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+
+    <ion-col *ngIf="!isManufacturerSelected" sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12" >
+      <ion-item disabled="true">
+        <ion-label>Model</ion-label>
+        <ion-select interface="popover" formControlName="modelName">
+
+        </ion-select>
+      </ion-item>
+    </ion-col>
+
+    <ion-col *ngIf="isManufacturerSelected" sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+      <ion-item>
+        <ion-label>Model</ion-label>
+        <ion-select interface="popover" formControlName="modelName">
+            <ion-select-option *ngFor="let model of manufaturerModels" [value]="model">{{ model }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row >
+
+  <ion-row *ngIf="vahicleFormActive" class="ion-padding">
+
+    <ion-col sizeXl="2.5" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+      <ion-item lines="none">
+        <ion-label>Start date</ion-label>
+        <ion-datetime formControlName="startDate"></ion-datetime>
+      </ion-item>
+    </ion-col>
+
+    <ion-col sizeXl="2.5" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12" class="ion-wrap">
+      <ion-item lines="none">
+        <ion-label>End date</ion-label>
+        <ion-datetime formControlName="endDate"></ion-datetime>
+      </ion-item>
+    </ion-col>
+
+    <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12" class="ion-wrap">
+      <ion-item lines="none">
+        <ion-label>Date interval</ion-label >
+        <ion-select  interface="popover" formControlName="dateInterval">
+          <ion-select-option  value="3">By days</ion-select-option>
+          <ion-select-option  value="4">By weeks</ion-select-option>
+          <ion-select-option  value="5">By months</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+
+    <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+      <ion-item lines="none">
+        <ion-button size="default" color="primary" [disabled]="vehicleForm.invalid" (click)="fetchChartData()">Search</ion-button>
+      </ion-item>
+    </ion-col>
+
+  </ion-row>
+</form>
+  <ion-row class="ion-padding">
+    <ion-col>
+      <div style="display: block;" >
+        <canvas baseChart width="100%" height="30%"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+      </div>
+    </ion-col>
+  </ion-row>
+
+
+
+
+</ion-content>

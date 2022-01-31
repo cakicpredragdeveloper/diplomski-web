@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './_shared/store';
 import { SharedModule } from './_shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,9 @@ import { SharedModule } from './_shared/shared.module';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
 
-    SharedModule
+    SharedModule,
+
+    ChartsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

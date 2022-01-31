@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
     { title: 'Register', url: '/register', icon: 'paper-plane' },
     { title: 'Vehicles', url: '/vehicles', icon: 'car-sport' },
     { title: 'Visualization', url: '/vehicles/vehicle-track-visualisation', icon: 'map' },
+    { title: 'Monitoring', url: '/vehicles/vehicle-monitoring', icon: 'tv' },
 
   ];
     // { title: 'Home', url: '/', icon: 'home' }

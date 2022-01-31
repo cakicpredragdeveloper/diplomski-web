@@ -23,7 +23,7 @@ export class VehicleListPage {
   manufaturerModels: string[] = undefined;
 
   loading = true;
-  isManufacturerSelected:boolean = false;
+  isManufacturerSelected = false;
 
   paginationConfig = {
     pageIndex: 0,

@@ -3,13 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/vehicles"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="loading === 0 ">Vehicle Vin:{{ vehicle.vin}}</ion-title>
+    <ion-title *ngIf="loading === 0 ">Vehicle Vin:{{ vehicle.vin  }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-
+<ion-content >
   <ion-grid class="ion-padding" >
 
     <ion-row *ngIf="loading === 0" class="ion-padding-start" >
@@ -31,11 +29,72 @@
       </ion-col>
     </ion-row>
 
+    <ion-row *ngIf="!loading">
+      <ion-col>
+        <h3>Mileage statistics</h3>
+      </ion-col>
+    </ion-row>
+
+    <form [formGroup]="vehicleMilageForm" *ngIf="vehicleMilageForm" >
+
+      <ion-row *ngIf="vahicleMilageFormActive && !loading " class="ion-padding">
+
+        <ion-col sizeXl="2.5" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+          <ion-item lines="none">
+            <ion-label>Start date</ion-label>
+            <ion-datetime formControlName="startDate"></ion-datetime>
+          </ion-item>
+        </ion-col>
+
+        <ion-col sizeXl="2.5" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12" class="ion-wrap">
+          <ion-item lines="none">
+            <ion-label>End date</ion-label>
+            <ion-datetime formControlName="endDate"></ion-datetime>
+          </ion-item>
+        </ion-col>
+
+        <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12" class="ion-wrap">
+          <ion-item lines="none">
+            <ion-label>Date interval</ion-label >
+            <ion-select  interface="popover" formControlName="dateInterval">
+              <ion-select-option  value="3">By days</ion-select-option>
+              <ion-select-option  value="4">By weeks</ion-select-option>
+              <ion-select-option  value="5">By months</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+
+        <ion-col sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
+          <ion-item lines="none">
+            <ion-button size="default" color="primary" [disabled]="vehicleMilageForm.invalid" (click)="fetchChartData()">Search</ion-button>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </form>
+
+    <ion-row class="ion-padding">
+      <ion-col>
+        <div style="display: block;" *ngIf="!loading">
+          <canvas baseChart width="100%" height="30%"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins">
+          </canvas>
+        </div>
+      </ion-col>
+    </ion-row>
+
     <ion-row *ngIf="loading > 0">
       <ion-col class="ion-text-center">
         <ion-spinner color="primary"></ion-spinner>
       </ion-col>
     </ion-row>
+
 
   </ion-grid>
 </ion-content>

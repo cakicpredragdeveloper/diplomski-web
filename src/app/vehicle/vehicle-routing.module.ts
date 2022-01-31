@@ -12,9 +12,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/vehicle-track-visualisation/vehicle-track-visualisation.module').then( m => m.VehicleTrackVisualisationPageModule)
   },
   {
+    path: 'vehicle-monitoring',
+    loadChildren: () => import('./pages/vehicle-monitoring/vehicle-monitoring.module').then( m => m.VehicleMonitoringPageModule)
+  },
+  {
     path: ':vehicleVin',
     loadChildren: () => import('./pages/vehicle-detail/vehicle-detail.module').then( m => m.VehicleDetailPageModule)
-  }
+  },
+
+
 ];
 
 @NgModule({
