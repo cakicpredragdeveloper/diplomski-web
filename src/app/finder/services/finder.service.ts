@@ -31,7 +31,7 @@ export class FinderService extends BaseApiService {
       params = (polygon ? params.append('polygon[]', JSON.stringify(point))    : params);
     });
 
-    return this.http.get<Coordinate[]>(this.apiUrl + '/vehicles-within-polygon', {params})
+    return this.http.post<Coordinate[]>(this.apiUrl + '/vehicles-within-polygon', polygon.points)
       .pipe(catchError(response => this.handleError(response)));
   }
 }

@@ -42,7 +42,7 @@ export class FinderPage implements OnInit {
   }
 
   findWithinRadius(circle: Circle) {
-    this.coordinates$.next([
+    /*this.coordinates$.next([
       {
         timestamp: new Date(),
         vin: '1',
@@ -59,15 +59,15 @@ export class FinderPage implements OnInit {
         manufacturerName: '',
         modelName: '',
       } as Coordinate
-    ]);
-    // this.finderService.vehiclesWithinRadius(circle).subscribe(
-    //   result => {
-    //     this.coordinates$.next(result);
-    //   },
-    //   error => {
-    //     this.toastService.showError('Data could not be fetched');
-    //   }
-    // );
+    ]);*/
+    this.finderService.vehiclesWithinRadius(circle).subscribe(
+      result => {
+        this.coordinates$.next(result);
+      },
+      error => {
+        this.toastService.showError('Data could not be fetched');
+      }
+    );
   }
 
   findWithinPolygon(polygon: Polygon) {
