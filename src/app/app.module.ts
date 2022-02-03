@@ -25,7 +25,7 @@ import { ChartsModule } from 'ng2-charts';
 
     SharedModule,
 
-    ChartsModule
+    // ChartsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

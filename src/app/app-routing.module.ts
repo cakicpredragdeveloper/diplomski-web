@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'finder',
     loadChildren: () => import('./finder/finder.module').then( m => m.FinderModule)
-  },
+  }
 ];
 
 @NgModule({

@@ -16,10 +16,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/vehicle-monitoring/vehicle-monitoring.module').then( m => m.VehicleMonitoringPageModule)
   },
   {
+    path: ':vehicleVin/vehicle-finder',
+    loadChildren: () => import('./pages/vehicle-finder/vehicle-finder.module').then(m => m.VehicleFinderPageModule)
+  },
+  {
     path: ':vehicleVin',
     loadChildren: () => import('./pages/vehicle-detail/vehicle-detail.module').then( m => m.VehicleDetailPageModule)
-  },
-
+  }
 
 ];
 

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {SharedModule} from "../_shared/shared.module";
-import {VehicleRoutingModule} from "./vehicle-routing.module";
-
+import { SharedModule } from '../_shared/shared.module';
+import { VehicleRoutingModule } from './vehicle-routing.module';
+import { MapModule } from '../map/map.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     SharedModule,
+    MapModule,
 
     VehicleRoutingModule
   ]

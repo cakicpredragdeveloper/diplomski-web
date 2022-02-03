@@ -29,6 +29,12 @@
       </ion-col>
     </ion-row>
 
+    <ion-row *ngIf="loading === 0">
+      <ion-col>
+        <ion-button routerLink="/vehicles/{{vehicle.vin}}/vehicle-finder">Find</ion-button>
+      </ion-col>
+    </ion-row>
+
     <ion-row *ngIf="!loading">
       <ion-col>
         <h3>Mileage statistics</h3>

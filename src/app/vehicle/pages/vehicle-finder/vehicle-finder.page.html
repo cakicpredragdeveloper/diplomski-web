@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vehicle Finder</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div style="background: white; width: 100%; height: 100%">
+
+  <form [formGroup]="filter" *ngIf="filterActive">
+
+    <ion-row>
+      <ion-col size="6">
+
+        <ion-range formControlName="radius" min="1" max="1000" step="1" value="50" snaps color="primary" (ionChange)="getRadius($event)">
+          <ion-chip slot="start" color="primary">1</ion-chip>
+          <ion-chip slot="end" color="primary">1000</ion-chip>
+          <ion-chip slot="end" color="primary">{{ radius }}</ion-chip>
+        </ion-range>
+
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+
+  <app-vehicle-map
+    *ngIf="filterActive"
+    [filter]="filter"
+    [coordinates$]="coordinates$"
+    [vin]="vin"
+    (findWithinRadius)="findWithinRadius($event)"
+  ></app-vehicle-map>
+
+</div>

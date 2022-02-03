@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import * as L from 'leaflet';
-import {FormGroup} from "@angular/forms";
-import {Circle} from "../../../finder/dtos/Circle";
-import {Polygon} from "../../../finder/dtos/Polygon";
-import {BehaviorSubject} from "rxjs";
-import {Coordinate} from "../../../_shared/model/Coordinate";
-import {Point} from "../../../finder/dtos/Point";
+import { FormGroup } from '@angular/forms';
+import { Circle } from '../../../finder/dtos/Circle';
+import { Polygon } from '../../../finder/dtos/Polygon';
+import { BehaviorSubject } from 'rxjs';
+import { Coordinate } from '../../../_shared/model/Coordinate';
+import { Point } from '../../../finder/dtos/Point';
 
 @Component({
   selector: 'app-map',
