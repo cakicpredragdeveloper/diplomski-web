@@ -8,14 +8,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/vehicle-list/vehicle-list.module').then( m => m.VehicleListPageModule)
   },
   {
-    path: 'vehicle-track-visualisation',
-    loadChildren: () => import('./pages/vehicle-track-visualisation/vehicle-track-visualisation.module').then( m => m.VehicleTrackVisualisationPageModule)
-  },
-  {
-    path: 'vehicle-monitoring',
-    loadChildren: () => import('./pages/vehicle-monitoring/vehicle-monitoring.module').then( m => m.VehicleMonitoringPageModule)
-  },
-  {
     path: ':vehicleVin/vehicle-finder',
     loadChildren: () => import('./pages/vehicle-finder/vehicle-finder.module').then(m => m.VehicleFinderPageModule)
   },

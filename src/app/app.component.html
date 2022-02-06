@@ -1,19 +1,26 @@
 <ion-app>
   <ion-split-pane contentId="main-content" id="main-content" >
-    <ion-menu [disabled]="!showMenu" contentId="main-content" type="overlay" >
-      <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Fleet manager</ion-list-header>
+    <ion-menu [disabled]="!showMenu" contentId="main-content" type="overlay" id="side-menu" >
+      <ion-content color="primary">
+        <ion-list id="inbox-list" style="border-bottom: 4px solid rgb(5,68,104);">
+          <ion-list-header color="primary">Fleet manager</ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            <ion-item class="sidebar-router-ion-item menu-ion-item" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" color="light" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
       </ion-content>
+
+      <ion-footer class="sidebar-footer-ion-item" >
+        <ion-item color="primary" class="sidebar-footer-ion-item" >
+          <ion-icon name="log-out-outline" class="pointer" style="cursor: pointer;" slot="start" color="light" (click)="logout()"></ion-icon>
+        </ion-item>
+      </ion-footer>
+
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>

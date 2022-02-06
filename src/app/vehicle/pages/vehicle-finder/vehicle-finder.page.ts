@@ -52,34 +52,34 @@ export class VehicleFinderPage implements OnInit {
 
 
   findWithinRadius(circle: Circle) {
-    this.coordinates$.next([
-      {
-        timestamp: new Date(),
-        vin: '1',
-        speed: 1,
-        geoLocation: {
-          latitude: circle.point.lat + Math.random() % (circle.radius / 2),
-          longitude: circle.point.lng + Math.random() % (circle.radius / 2)
-        },
-        place: '',
-        fuelLevel: 1,
-        city: '',
-        bateryVoltage: 1,
-        direction: 1,
-        manufacturerName: '',
-        modelName: '',
-      } as Coordinate
-    ]);
+    // this.coordinates$.next([
+    //   {
+    //     timestamp: new Date(),
+    //     vin: '1',
+    //     speed: 1,
+    //     geoLocation: {
+    //       latitude: circle.point.lat + Math.random() % (circle.radius / 2),
+    //       longitude: circle.point.lng + Math.random() % (circle.radius / 2)
+    //     },
+    //     place: '',
+    //     fuelLevel: 1,
+    //     city: '',
+    //     bateryVoltage: 1,
+    //     direction: 1,
+    //     manufacturerName: '',
+    //     modelName: '',
+    //   } as Coordinate
+    // ]);
 
 
-    // this.finderService.vehiclesWithinRadius(circle).subscribe(
-    //   result => {
-    //     this.coordinates$.next(result);
-    //   },
-    //   error => {
-    //     this.toastService.showError('Data could not be fetched');
-    //   }
-    // );
+    this.finderService.vehiclesWithinRadius(circle).subscribe(
+      result => {
+        this.coordinates$.next(result);
+      },
+      error => {
+        this.toastService.showError('Data could not be fetched');
+      }
+    );
   }
 
 }

@@ -23,12 +23,12 @@ export class AuthEffects implements OnInitEffects {
           .pipe(
             map(response => {
               const accessToken = localStorage.getItem('accessToken');
-              //this.router.navigate(['/']);
+              this.router.navigate(['/vehicles']);
               return AuthActions.loginSuccess({user: response});
             }),
             catchError((err) => {
-             // console.log(err.error);
-              //this.router.navigate(['/login']);
+              console.log(err.error);
+              this.router.navigate(['/login']);
               return of(AuthActions.loginFailure({error: err.error}));
             })
           );
@@ -54,7 +54,7 @@ export class AuthEffects implements OnInitEffects {
             }),
             catchError((err) => {
               this.toastService.showError(err.error.message);
-              // this.showErrorToast('Login unsuccessful');
+              this.showErrorToast('Login unsuccessful');
               return of(AuthActions.loginFailure({error: err.error}));
             })
           )
@@ -68,7 +68,7 @@ export class AuthEffects implements OnInitEffects {
       mergeMap(() => this.authService.isLoggedIn()
         .pipe(
           map(response => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/vehicles']);
             return AuthActions.loginSuccess({user: response});
           }),
           catchError((err) => {
@@ -86,11 +86,9 @@ export class AuthEffects implements OnInitEffects {
       mergeMap((action) => this.authService.register(action.user)
         .pipe(
           map(response => {
-            localStorage.setItem('role', this.jwtTokenService.getRoleFromToken(response.accessToken));
-            localStorage.setItem('accessToken', response.accessToken);
-            localStorage.setItem('refreshToken', response.refreshToken);
-            localStorage.setItem('expiration', this.jwtTokenService.getExpirationFromToken(response.accessToken));
-            return AuthActions.getCurrentUser();
+            this.toastService.showSuccess('Registration successful');
+            this.router.navigate(['/login']);
+            return AuthActions.registerSuccess({user: response});
           }),
           catchError((err) => {
             this.showErrorToast(err.error);
@@ -112,7 +110,7 @@ export class AuthEffects implements OnInitEffects {
             return AuthActions.logoutSuccess();
           }),
           catchError((err) => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/vehicles']);
             return of(AuthActions.logoutSuccess());
           })
         )

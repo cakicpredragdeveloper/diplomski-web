@@ -76,9 +76,9 @@ export class VehicleMonitoringPage implements OnInit {
 
       this.vehicleForm = this.formBuilder.group({
 
-        startDate:        [null, Validators.required],
-        endDate:          [null, Validators.required],
-        dateInterval:     [null, Validators.required],
+        startDate:        [new Date().toISOString(), Validators.required],
+        endDate:          [new Date().toISOString(), Validators.required],
+        dateInterval:     ['3', Validators.required],
         manufacturerName: [null, Validators.required],
         modelName:        [null]
       });
@@ -105,11 +105,30 @@ export class VehicleMonitoringPage implements OnInit {
     }
 
     fetchChartData() {
-      this.vehicleService.getKilometrageByDateAndManufacturer( this.vehicleForm.value as MarksModelTrackSearchParameters ).subscribe(
+
+      const startDate = this.vehicleForm.controls.startDate.value.toString().split('T');
+      const endDate = this.vehicleForm.controls.endDate.value.toString().split('T');
+
+
+      this.vehicleService.getKilometrageByDateAndManufacturer( {
+        startDate: startDate[0],
+        endDate: endDate[0],
+        dateInterval: this.vehicleForm.controls.dateInterval.value,
+        manufacturerName: this.vehicleForm.controls.manufacturerName.value,
+        modelName: this.vehicleForm.controls.modelName.value
+      } as MarksModelTrackSearchParameters ).subscribe(
         response =>{
 
-          this.lineChartData[0].data = response.kilometrage;
-          this.lineChartLabels = response.date;
+        this.lineChartData[0].data = [];
+        this.lineChartLabels = [];
+        
+        response.kilometrageByDate.forEach(kilometrage => {
+
+            this.lineChartData[0].data.push(kilometrage.kilometrage);
+            let date = kilometrage.date.toString().split('T');
+            this.lineChartLabels.push(date[0]);
+        });
+
           this.lineChartData[0].label = this.vehicleForm.controls.manufacturerName.value + ' ' + this.vehicleForm.controls.modelName.value;
         }
       );
@@ -137,5 +156,13 @@ export class VehicleMonitoringPage implements OnInit {
 
       this.vehicleForm.controls.modelName.setValue('');
       this.vehicleForm.controls.modelName.updateValueAndValidity();
+    }
+
+      resetSelected(){
+        this.vehicleForm.controls.manufacturerName.setValue('');
+        this.vehicleForm.controls.manufacturerName.updateValueAndValidity();
+        this.isManufacturerSelected = false;
+        this.vehicleForm.controls.modelName.setValue('');
+        this.vehicleForm.controls.modelName.updateValueAndValidity();
     }
 }

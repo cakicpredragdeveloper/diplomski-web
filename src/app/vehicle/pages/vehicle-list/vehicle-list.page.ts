@@ -112,6 +112,8 @@ export class VehicleListPage {
       odometerTo:['']
     });
 
+
+
     this.filter.valueChanges
       .pipe(
         debounceTime(350),

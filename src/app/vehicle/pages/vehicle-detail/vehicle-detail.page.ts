@@ -9,6 +9,7 @@ import { Color, Label } from 'ng2-charts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { VehicleTrackSearchParameters } from './../../../_shared/model/VehicleTrackSearchParameters';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-vehicle-detail',
@@ -90,9 +91,9 @@ export class VehicleDetailPage implements OnInit {
 
     this.vehicleMilageForm = this.formBuilder.group({
       vin:           [vehicleVin, Validators.required],
-      startDate:     [null, Validators.required],
-      endDate:       [null, Validators.required],
-      dateInterval:  [null, Validators.required]
+      startDate:     [new Date().toISOString(), Validators.required],
+      endDate:       [new Date().toISOString(), Validators.required],
+      dateInterval:  ['3', Validators.required]
     });
 
     this.vahicleMilageFormActive = true;
@@ -117,11 +118,28 @@ export class VehicleDetailPage implements OnInit {
   }
 
   fetchChartData() {
-    this.vehicleService.getKilometrageByDate(this.vehicleMilageForm.value as VehicleTrackSearchParameters).subscribe(
+
+    const startDate = this.vehicleMilageForm.controls.startDate.value.toString().split('T');
+    const endDate = this.vehicleMilageForm.controls.endDate.value.toString().split('T');
+    
+    this.vehicleService.getKilometrageByDate({
+      vin: this.vehicleMilageForm.controls.vin.value,
+      startDate: startDate[0],
+      endDate: endDate[0],
+      dateInterval: this.vehicleMilageForm.controls.dateInterval.value
+    }as VehicleTrackSearchParameters).subscribe(
       response =>{
 
-        this.lineChartData[0].data = response.kilometrage;
-        this.lineChartLabels = response.date;
+        this.lineChartData[0].data = [];
+        this.lineChartLabels = [];
+
+        response.kilometrageByDate.forEach(kilometrage => {
+
+            this.lineChartData[0].data.push(kilometrage.kilometrage);
+            let date = kilometrage.date.toString().split('T');
+            this.lineChartLabels.push(date[0]);
+        });
+
       }
     );
   }

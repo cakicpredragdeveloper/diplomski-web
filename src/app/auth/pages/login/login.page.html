@@ -1,15 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title color="primary">Diplomski</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 
 
 <ion-content class="ion-padding">
 
   <form [formGroup]="loginForm" *ngIf="formActive && !isAuthenticatingIndicator" (ngSubmit)="login()" (keydown.enter)="login()" style="margin-top: 50px">
-
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <h2 class="logo">Fleet Manager</h2>
+      </ion-col>
+    </ion-row>
     <!-- Email -->
     <ion-row class="ion-justify-content-center">
       <ion-col
@@ -30,13 +28,13 @@
             *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required"
             class="small-1 ion-margin-left"
             color="danger"
-          >Neophodno je uneti Email
+          >Email is required
           </ion-label>
           <ion-label
             *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.email"
             class="small-1"
             color="danger"
-          >Email nije validan
+          >Email is not valid
           </ion-label>
         </div>
       </ion-col>
@@ -55,7 +53,7 @@
 
           <ion-input #password
                      type="password"
-                     placeholder="Lozinka"
+                     placeholder="Password"
                      formControlName="password"
           >
           </ion-input>
@@ -70,23 +68,19 @@
             class="small-1 "
             color="danger"
 
-          >Neophodno je uneti lozinku
+          >Password is required
           </ion-label>
           <ion-label
             *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.minlength"
             class="small-1 "
             color="danger"
-          >Lozinka mora imati minimum 8 karaktera
+          >Password must have minimum 6 characters
           </ion-label>
         </div>
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <ion-button routerLink="/register">Register</ion-button>
-      </ion-col>
-    </ion-row>
+
 
     <!-- Login btn-->
     <ion-row class="ion-justify-content-center ion-margin-vertical">
@@ -96,7 +90,16 @@
         sizeSm="10"
         sizeXs="12"
         class="ion-text-center">
-        <ion-button color="primary" type="submit" [disabled]="loginForm.invalid">Prijavi se</ion-button>
+        <ion-button color="primary" type="submit" [disabled]="loginForm.invalid">Log in</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col 
+      class="ion-text-center">
+      <ion-label>
+        Don't have account? <p routerLink="/register" style="cursor: pointer;">Register now</p>
+      </ion-label>
       </ion-col>
     </ion-row>
 

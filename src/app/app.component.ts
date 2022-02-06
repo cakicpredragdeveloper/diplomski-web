@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import { Store } from '@ngrx/store';
+import { logout } from './auth/store/auth.actions';
+import { State } from './_shared/store';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +14,15 @@ export class AppComponent implements OnInit {
   showMenu = false;
 
   public appPages = [
-    { title: 'Login', url: '/login', icon: 'mail' },
-    { title: 'Register', url: '/register', icon: 'paper-plane' },
     { title: 'Vehicles', url: '/vehicles', icon: 'car-sport' },
     { title: 'Finder', url: '/finder', icon: 'car-sport' },
-    { title: 'Visualization', url: '/vehicles/vehicle-track-visualisation', icon: 'map' },
-    { title: 'Monitoring', url: '/vehicles/vehicle-monitoring', icon: 'tv' },
+    { title: 'Visualization', url: '/vehicle-track-visualisation', icon: 'map' },
+    { title: 'Monitoring', url: '/vehicle-monitoring', icon: 'tv' },
 
   ];
     // { title: 'Home', url: '/', icon: 'home' }
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private store: Store<State>) {}
 
   ngOnInit() {
     this.showSideMenu();
@@ -32,5 +34,9 @@ export class AppComponent implements OnInit {
         this.showMenu = !(this.router.url === '/login' || this.router.url === '/register');
       }
     });
+  }
+
+  logout() {
+    this.store.dispatch(logout());
   }
 }

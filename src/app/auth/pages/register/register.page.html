@@ -3,6 +3,12 @@
 
     <ion-grid style="padding-top: 100px;" >
 
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <h2 class="logo">Fleet Manager</h2>
+        </ion-col>
+      </ion-row>
+
       <ion-row class="ion-justify-content-center ion-padding">
         <ion-col sizeXs="12" sizeMd="10" sizeXl="6">
           <div class="form-group">
@@ -17,13 +23,13 @@
               *ngIf="(registerForm.controls.email.touched || submitted) && registerForm.controls.email.errors?.required"
               class="small-1"
               color="danger"
-            >Potrebno je uneti email adresu
+            >Email is required
             </ion-label>
             <ion-label
               *ngIf="(registerForm.controls.email.touched || submitted) && registerForm.controls.email.errors?.email"
               class="small-1"
               color="danger"
-            >Email adresa nije validna
+            >Email is not valid
             </ion-label>
           </div>
         </ion-col>
@@ -33,7 +39,7 @@
         <ion-col sizeXs="12" sizeMd="10" sizeXl="6">
           <div class="form-group">
             <ion-item>
-              <ion-input #password type="password" placeholder="Lozinka" formControlName="password"></ion-input>
+              <ion-input #password type="password" placeholder="Password" formControlName="password"></ion-input>
               <ion-icon name="eye"
                         slot="end"
                         class="show-right-icon-input pointer"
@@ -44,19 +50,19 @@
               *ngIf="(registerForm.controls.password.touched || submitted) && registerForm.controls.password.errors?.required"
               class="small-1"
               color="danger"
-            >Potrebno je uneti lozinku
+            >Password is required
             </ion-label>
             <ion-label
               *ngIf="(registerForm.controls.password.touched || submitted) && registerForm.controls.password.errors?.minlength"
               class="small-1"
               color="danger"
-            >Lozinka mora imati minimum 6 karaktera
+            >Passsword must have minimum 6 characters
             </ion-label>
             <ion-label
               *ngIf="(registerForm.controls.password.touched || submitted) && registerForm.errors?.passwordNotStrong"
               class="small-1"
               color="danger"
-            >Lozinka mora sadržati minimum 1 cifru, 1 veliko slovo i 1 specijalni karakter
+            >Password must have minimum 1 number, 1 capital letter, 1 special character
             </ion-label>
           </div>
         </ion-col>
@@ -66,7 +72,7 @@
         <ion-col sizeXs="12" sizeMd="10" sizeXl="6">
           <div class="form-group">
             <ion-item>
-              <ion-input #passwordRepeat type="password" placeholder="Potvrdi Lozinku" formControlName="confirmedPassword"
+              <ion-input #passwordRepeat type="password" placeholder="Password repeat" formControlName="confirmedPassword"
               ></ion-input>
               <ion-icon name="eye"
                         slot="end"
@@ -78,31 +84,36 @@
               *ngIf="(registerForm.controls.confirmedPassword.touched || submitted) && registerForm.controls.confirmedPassword.errors?.required"
               class="small-1"
               color="danger"
-            >Potrebno je uneti potvrdu lozinke
+            >Reapeted passsword is required
             </ion-label>
             <br>
             <ion-label
               *ngIf="registerForm.errors?.passwordsNotMatched"
               class="small-1"
               color="danger"
-            >Lozinke se ne poklapaju
+            >Passwrod don't match
             </ion-label>
           </div>
         </ion-col>
       </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-button routerLink="/login">Login</ion-button>
-        </ion-col>
-      </ion-row>
+    
 
       <ion-row class="ion-justify-content-center">
         <ion-col sizeXs="12" sizeMd="6" sizeXl="5" class="ion-text-center">
           <ion-button color="primary" type="submit" class="login-button"
                       [disabled]="registerForm.invalid">
-            Dodaj
+            Register
           </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col 
+        class="ion-text-center">
+        <ion-label>
+          have account? <p routerLink="/login" style="cursor: pointer;">Login now</p>
+        </ion-label>
         </ion-col>
       </ion-row>
 

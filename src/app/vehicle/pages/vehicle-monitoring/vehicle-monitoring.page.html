@@ -29,10 +29,13 @@
     <ion-col *ngIf="isManufacturerSelected" sizeXl="3" sizeLg="6" sizeMd="6" sizeSm="12" sizeXs="12">
       <ion-item>
         <ion-label>Model</ion-label>
-        <ion-select interface="popover" formControlName="modelName">
+        <ion-select interface="popover" formControlName="modelName" value="null">
             <ion-select-option *ngFor="let model of manufaturerModels" [value]="model">{{ model }}</ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-col>
+    <ion-col size="auto" class="ion-justify-content-center ion-padding-top" >
+      <ion-icon name="close-outline" color="danger" (click)="resetSelected()" size="large" style="cursor: pointer;"></ion-icon>
     </ion-col>
   </ion-row >
 
