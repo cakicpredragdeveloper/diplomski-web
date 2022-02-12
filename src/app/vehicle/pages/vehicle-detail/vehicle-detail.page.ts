@@ -9,7 +9,6 @@ import { Color, Label } from 'ng2-charts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { VehicleTrackSearchParameters } from './../../../_shared/model/VehicleTrackSearchParameters';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-vehicle-detail',
@@ -31,7 +30,7 @@ export class VehicleDetailPage implements OnInit {
   // Chart
 
   public lineChartLegend = true;
-  public lineChartType: ChartType = 'line';;
+  public lineChartType: ChartType = 'bar';
   public lineChartPlugins = [];
 
   public lineChartOptions: ChartOptions = {
@@ -41,15 +40,27 @@ export class VehicleDetailPage implements OnInit {
   public lineChartColors: Color[] = [
     {
       borderColor: 'black',
-      backgroundColor: 'rgba(137,196,244, 1)'
-    },
+      backgroundColor: 'rgba(22, 160, 133, 1)'
+    }
   ];
+
+  public lineChartColors1: Color[] = [{
+  
+      borderColor: 'black',
+      backgroundColor: 'rgba(254, 121, 104, 1)'
+  }];
 
   public lineChartLabels: Label[] = [];
 
+  public lineChartLabels1: Label[] = [];
+
   public lineChartData: ChartDataSets[] = [
-    { data: [], label: '' },
+     { data: [], label: '' }
   ];
+
+  public lineChartData1: ChartDataSets[] = [
+    { data: [], label: '' }
+ ];
 
 
   constructor(private router: Router,
@@ -72,7 +83,8 @@ export class VehicleDetailPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       if (params.has('vehicleVin')) {
         const vehicleVin = params.get('vehicleVin');
-        this.lineChartData[0].label = `vin: ${vehicleVin}`;
+        this.lineChartData[0].label  = `Kilometrage`;
+        this.lineChartData1[0].label = `Fuel consumption in liters`;
         this.buildVehicleMilageForm(vehicleVin);
         this.fetchVehicle(vehicleVin);
       } else {
@@ -129,15 +141,22 @@ export class VehicleDetailPage implements OnInit {
       dateInterval: this.vehicleMilageForm.controls.dateInterval.value
     }as VehicleTrackSearchParameters).subscribe(
       response =>{
-
+        
         this.lineChartData[0].data = [];
         this.lineChartLabels = [];
 
+        this.lineChartData1[0].data = [];
+        this.lineChartLabels1 = [];
+       
         response.kilometrageByDate.forEach(kilometrage => {
 
             this.lineChartData[0].data.push(kilometrage.kilometrage);
             let date = kilometrage.date.toString().split('T');
             this.lineChartLabels.push(date[0]);
+            this.lineChartLabels1.push(date[0]);
+
+            this.lineChartData1[0].data.push(kilometrage.totalFuelUsed);
+
         });
 
       }

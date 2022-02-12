@@ -30,7 +30,7 @@ export class VehicleMonitoringPage implements OnInit {
     // Chart
 
     public lineChartLegend = true;
-    public lineChartType: ChartType = 'line';;
+    public lineChartType: ChartType = 'bar';
     public lineChartPlugins = [];
 
     public lineChartOptions: ChartOptions = {
@@ -40,7 +40,7 @@ export class VehicleMonitoringPage implements OnInit {
     public lineChartColors: Color[] = [
       {
         borderColor: 'black',
-        backgroundColor: 'rgba(137,196,244, 1)'
+        backgroundColor: 'rgba(22, 160, 133, 1)'
       },
     ];
 
