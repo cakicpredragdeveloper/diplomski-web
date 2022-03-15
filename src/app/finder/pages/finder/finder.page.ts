@@ -35,14 +35,15 @@ export class FinderPage implements OnInit {
   buildForm() {
     this.filter = this.formBuilder.group({
       type: ['circle'],
-      radius: [50]
+      radius: [this.radius]
     });
 
     this.filterActive = true;
   }
 
   findWithinRadius(circle: Circle) {
-    /*this.coordinates$.next([
+    /*
+    this.coordinates$.next([
       {
         timestamp: new Date(),
         vin: '1',
@@ -59,7 +60,8 @@ export class FinderPage implements OnInit {
         manufacturerName: '',
         modelName: '',
       } as Coordinate
-    ]);*/
+    ]);
+    */
     this.finderService.vehiclesWithinRadius(circle).subscribe(
       result => {
         this.coordinates$.next(result);
@@ -68,10 +70,10 @@ export class FinderPage implements OnInit {
         this.toastService.showError('Data could not be fetched');
       }
     );
+
   }
 
   findWithinPolygon(polygon: Polygon) {
-    console.log(polygon);
     this.finderService.vehiclesWithinPolygon(polygon).subscribe(
       result => {
         this.coordinates$.next(result);

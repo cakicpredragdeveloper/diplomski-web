@@ -6,6 +6,7 @@ import { Polygon } from '../../../finder/dtos/Polygon';
 import { BehaviorSubject } from 'rxjs';
 import { Coordinate } from '../../../_shared/model/Coordinate';
 import { Point } from '../../../finder/dtos/Point';
+import {mark} from "@angular/compiler-cli/src/ngtsc/perf/src/clock";
 
 @Component({
   selector: 'app-map',
@@ -13,6 +14,17 @@ import { Point } from '../../../finder/dtos/Point';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements AfterViewInit {
+
+  redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+
 
   private map;
   private polygonCoordinates = [];
@@ -85,7 +97,7 @@ export class MapComponent implements AfterViewInit {
 
   private createMap() {
     return L.map('map', {
-      center: [ 51.0756, 10.2509 ],
+      center: [ 51.0756, 11.0509 ],
       zoom: 6
     });
   }
@@ -164,6 +176,7 @@ export class MapComponent implements AfterViewInit {
 
   private onMapClickForPolygon(data) {
     const marker = L.marker(data.latlng, {
+      icon: this.redIcon,
       draggable: true
     });
 
@@ -206,6 +219,7 @@ export class MapComponent implements AfterViewInit {
 
       coordinates.forEach(coordinate => {
         const marker = L.marker([coordinate.geoLocation.latitude, coordinate.geoLocation.longitude], {
+          icon: this.redIcon,
           draggable: false
         });
         marker.addTo(this.map).bindPopup(
