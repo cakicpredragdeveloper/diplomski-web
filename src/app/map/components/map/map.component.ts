@@ -24,6 +24,9 @@ export class MapComponent implements AfterViewInit {
     shadowSize: [41, 41]
   });
 
+  zoomStart = 6;
+  zoomEnd = 6;
+
 
 
   private map;
@@ -73,7 +76,7 @@ export class MapComponent implements AfterViewInit {
         this.lastCircle.remove();
         this.lastCircle = L.circleMarker(this.lastCircle._latlng, {
           draggable: true,
-          radius
+          radius: this.filter.controls.radius.value * this.num(10 - this.map.getZoom())
         });
         this.findWithinRadius.emit({
           point: {
@@ -96,16 +99,58 @@ export class MapComponent implements AfterViewInit {
   }
 
   private createMap() {
-    return L.map('map', {
+    const map = L.map('map', {
       center: [ 51.0756, 11.0509 ],
       zoom: 6
     });
+/*
+    const marker3 = L.circleMarker([ 51.0756, 11.6129 ], {
+      draggable: true,
+      radius: 10
+    });
+
+    marker3.addTo(map);
+
+    const marker = L.circleMarker([ 51.0756, 11.0509 ], {
+      draggable: true,
+      radius: 10
+    });
+
+    marker.addTo(map);
+
+    const marker2 = L.circleMarker([ 51.0756, 10.9031 ], {
+      draggable: true,
+      radius: 10
+    });
+    marker2.addTo(map);
+*/
+    map.on('zoomstart', () => {
+      this.zoomStart = map.getZoom();
+      // console.log(map.getZoom());
+    });
+
+    map.on('zoomend', () => {
+      console.log(map.getZoom());
+      this.zoomEnd = map.getZoom();
+      const diff = this.zoomStart - this.zoomEnd;
+      if (diff > 0) {
+        if (this.lastCircle) {
+          this.lastCircle.setRadius(this.lastCircle.getRadius() / 2);
+        }
+      } else if (diff < 0) {
+        if (this.lastCircle) {
+          this.lastCircle.setRadius(this.lastCircle.getRadius() * 2);
+        }
+      }
+    });
+
+    return map;
   }
 
   private addTileToMap() {
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
-      minZoom: 3,
+      minZoom: 0,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
@@ -197,7 +242,16 @@ export class MapComponent implements AfterViewInit {
 
     const marker = L.circleMarker(data.latlng, {
       draggable: true,
-      radius: this.filter.controls.radius.value
+      // radius: (this.map.getZoom() / 10)
+      // radius: this.filter.controls.radius.value + (10 * this.map.getZoom())
+      radius: this.filter.controls.radius.value * this.num(10 - this.map.getZoom())
+      // radius: this.filter.controls.radius.value * 40  // 12
+      // radius: this.filter.controls.radius.value * 20  // 11
+      // radius: this.filter.controls.radius.value * 0.65  // 6
+      //radius: this.filter.controls.radius.value * 1.3  // 7
+      // radius: this.filter.controls.radius.value * 2.6  // 8
+      // radius: this.filter.controls.radius.value * 5.2  // 9
+      // radius: this.filter.controls.radius.value * 10  // 10
     });
     this.lastCircle = marker;
 
@@ -210,6 +264,20 @@ export class MapComponent implements AfterViewInit {
       },
       radius: this.filter.controls.radius.value
     });
+  }
+
+  private num(val) {
+    let res = 10;
+    let g = Math.abs(val);
+    for (let i = 0; i < g; i++) {
+      if (val < 0) {
+        res *=2;
+      }
+      else {
+        res /=2;
+      }
+    }
+    return res;
   }
 
   private subscribeToCoordinates() {

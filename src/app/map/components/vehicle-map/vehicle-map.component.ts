@@ -64,14 +64,14 @@ export class VehicleMapComponent implements AfterViewInit {
         this.lastCircle.remove();
         this.lastCircle = L.circleMarker(this.lastCircle._latlng, {
           draggable: true,
-          radius
+          radius: this.filter.controls.radius.value * this.num(10 - this.map.getZoom())
         });
         this.findWithinRadius.emit({
           point: {
             lat: this.lastCircle._latlng.lat,
             lng: this.lastCircle._latlng.lng
           },
-          radius
+          radius: this.filter.controls.radius.value
         });
         this.lastCircle.addTo(this.map);
       }
@@ -128,7 +128,7 @@ export class VehicleMapComponent implements AfterViewInit {
         lat: data.latlng.lat,
         lng: data.latlng.lng,
       },
-      radius: this.filter.controls.radius.value
+      radius: this.filter.controls.radius.value * this.num(10 - this.map.getZoom())
     });
   }
 
@@ -162,11 +162,25 @@ export class VehicleMapComponent implements AfterViewInit {
 
   private setPosition(position: Coordinate) {
     const marker = L.circleMarker([position.geoLocation.latitude, position.geoLocation.longitude], {
-      radius: this.filter.controls.radius.value
+      radius: this.filter.controls.radius.value * this.num(10 - this.map.getZoom())
     });
     this.lastCircle = marker;
 
     marker.addTo(this.map);
+  }
+
+  private num(val) {
+    let res = 10;
+    let g = Math.abs(val);
+    for (let i = 0; i < g; i++) {
+      if (val < 0) {
+        res *=2;
+      }
+      else {
+        res /=2;
+      }
+    }
+    return res;
   }
 }
 
